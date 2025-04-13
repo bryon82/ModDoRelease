@@ -15,4 +15,5 @@ What this will create is:
 * a zipped folder for github with a folder with your mod files in it
 <br>
 For the thunderstore package it will then upload it to thunderstore and for the github pakage it will create a release and upload the github package to it.
-  
+<br>
+Note: This does zero error handling
