@@ -6,6 +6,7 @@ What this will create is:
 <br>
 For the thunderstore package it will then upload it to thunderstore and for the github pakage it will create a release and upload the github package to it.
 <br>
+
 **Note: This does zero error handling**
 
 ## Requirements
