@@ -1,0 +1,14 @@
+[config]
+schemaVersion = "0.0.1"
+
+[package]
+namespace = "RadDude"
+
+[general]
+repository = "https://thunderstore.io"
+
+[publish]
+communities = ["sailwind"]
+
+[publish.categories]
+sailwind = [ "mods" ]
