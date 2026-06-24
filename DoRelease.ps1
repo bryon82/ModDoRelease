@@ -3,16 +3,16 @@ $modName = "RandomEncounters"
 $description = "This Sailwind mod adds random encounters while at sea"
 $packageName = "RandomEncounters"
 $owner = "bryon82"
-$repo = "RandomEncounters"
+$repo = "SailwindRandomEncounters"
 $dependencies = @(
     'BepInEx-BepInExPack-5.4.2100'
 )
 # ======================
 
 # Only update below if you have different items to add
+$assetsPath = Join-Path $PSScriptRoot "Assets"
 $dllPath = Join-Path $PSScriptRoot "$modName\bin\Debug\$modName.dll"
 $changelogPath = Join-Path $PSScriptRoot "CHANGELOG.md"
-$assetsPath = Join-Path $PSScriptRoot "Assets"
 $thunderstoreDir = Join-Path $PSScriptRoot "releaseThunderstore"
 $githubDir = Join-Path $PSScriptRoot "releaseGithub"
 
@@ -24,7 +24,7 @@ dotnet build
 $version = (Get-Item "$dllPath").VersionInfo.FileVersion
 $version = $version.Substring(0, $version.Length - 2)
 
-# Thunderstore
+# # Thunderstore
 New-Item -Path $thunderstoreDir -Name $modName -ItemType "directory"
 $modDir = Join-Path $thunderstoreDir $modName
 Copy-Item $dllPath -Destination $modDir
@@ -42,7 +42,7 @@ $manifest = @{
 }
 $manifest | ConvertTo-Json | Out-File -FilePath $manifestFilePath
 $thunderstoreAssetsPath = Join-Path $thunderstoreDir "$modName.zip"
-Get-ChildItem -Path $thunderstoreDir | Compress-Archive -DestinationPath $thunderstoreAssetsPath
+& "C:\Program Files\7-Zip\7z.exe" a -tzip $thunderstoreAssetsPath (Get-ChildItem -Path $thunderstoreDir).FullName
 
 # upload
 Write-Host "Publishing thunderstore package: $packageName Version: $version"
@@ -54,7 +54,7 @@ $modDir = Join-Path $githubDir $modName
 Copy-Item $dllPath -Destination $modDir
 Copy-Item -Path $assetsPath -Destination $modDir -Recurse
 $githubAssetsPath = Join-Path $githubDir "$modName-$version.zip"
-Get-ChildItem -Path $githubDir | Compress-Archive -DestinationPath $githubAssetsPath
+& "C:\Program Files\7-Zip\7z.exe" a -tzip $githubAssetsPath (Get-ChildItem -Path $githubDir).FullName
 
 # get last changelog version info for body 
 $body = awk '/^##[^#]/{block++} {if (block==1) {print}}' $changelogPath | tail -n +3 | ForEach-Object { "$_`n" } 
